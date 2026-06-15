@@ -6,6 +6,11 @@ services:
     container_name: camera_back
     ports:
       - "8000:8000"   # 호스트 8000 → 컨테이너 8000
+    volumes:
+      # 호스트 ./back/data 를 컨테이너 /app/data 에 바인드 마운트.
+      # storage.json 이 호스트 디스크에 저장되므로 컨테이너 삭제·이미지 재빌드·
+      # docker compose down(-v 포함)·서버 재부팅에도 데이터가 보존된다.
+      - ./back/data:/app/data
     restart: always
 
   front:

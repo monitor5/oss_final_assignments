@@ -45,3 +45,40 @@ class RecommendationResponse(BaseModel):
     reason: str                       # 추천 이유
     lens_guide: List[LensGuideItem]   # 목적별 렌즈 가이드
     notice: str                       # 주의 문구
+
+
+# --- 결과 저장 / 불러오기 ---------------------------------------------------
+
+class SaveRequest(BaseModel):
+    name: str = Field(..., min_length=1, max_length=30, description="사용자 이름")
+    password: str = Field(..., min_length=1, max_length=50, description="패스워드")
+    # 저장 시점의 입력 요약과 추천 결과를 함께 보관 (그대로 다시 보여주기 위함)
+    inputs: dict = Field(default_factory=dict, description="입력 요약")
+    result: RecommendationResponse = Field(..., description="추천 결과")
+
+
+class SaveResponse(BaseModel):
+    msg: str
+    count: int           # 해당 사용자의 누적 저장 개수
+
+
+class LoadRequest(BaseModel):
+    name: str = Field(..., min_length=1, max_length=30, description="사용자 이름")
+    password: str = Field(..., min_length=1, max_length=50, description="패스워드")
+
+
+class SavedRecord(BaseModel):
+    saved_at: str
+    inputs: dict
+    result: RecommendationResponse
+
+
+class LoadResponse(BaseModel):
+    records: List[SavedRecord]
+
+
+class RestoreRequest(BaseModel):
+    name: str = Field(..., min_length=1, max_length=30, description="사용자 이름")
+    password: str = Field(..., min_length=1, max_length=50, description="패스워드")
+    # JSON 백업 파일에서 읽어온 기록 목록
+    records: List[SavedRecord] = Field(..., description="복원할 기록 목록")

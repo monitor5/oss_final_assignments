@@ -23,3 +23,6 @@ nohup.out
 
 # 과제 조건 문서
 docx/
+
+# 저장된 추천 기록 (런타임 데이터)
+back/data/
