@@ -69,8 +69,6 @@ with st.sidebar:
     st.caption("이름과 패스워드로 추천 결과를 저장하고 다시 불러올 수 있어요.")
     user_name = st.text_input("이름", key="user_name", placeholder="예: 김우현")
     user_pw = st.text_input("패스워드", key="user_pw", type="password")
-    st.divider()
-    st.caption(f"백엔드: {BACKEND_URL}")
 
 
 # --------------------------------------------------------------------------
