@@ -1,0 +1,21 @@
+# front(Streamlit) 와 back(FastAPI) 을 각각 별도 컨테이너로 실행한다.
+# (과제 조건: front 와 back 을 분리된 컨테이너로 구성)
+services:
+  back:
+    build: ./back
+    container_name: camera_back
+    ports:
+      - "8000:8000"   # 호스트 8000 → 컨테이너 8000
+    restart: always
+
+  front:
+    build: ./front
+    container_name: camera_front
+    ports:
+      - "8501:8501"   # 호스트 8501 → 컨테이너 8501
+    environment:
+      # Streamlit 컨테이너가 백엔드를 부를 때 사용하는 주소 (서비스명으로 통신)
+      - BACKEND_URL=http://back:8000
+    depends_on:
+      - back
+    restart: always

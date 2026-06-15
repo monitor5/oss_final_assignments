@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(echo \"--- existing python images ---\"; docker images | grep -i python || echo \"\\(none\\)\"; echo \"--- docker config ---\"; cat ~/.docker/config.json 2>/dev/null || echo \"\\(no config\\)\")",
+      "Read(//Users/gim-uhyeon/.docker/**)",
+      "Bash(docker context *)"
+    ]
+  }
+}
